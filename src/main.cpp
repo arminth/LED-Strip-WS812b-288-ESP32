@@ -12,10 +12,11 @@
 //              Oct-05-2020     davepl      Revised for Episode 07
 //              Oct-11-2020     davepl      Revised for Episode 08
 //              Oct-16-2020     davepl      Revised for Episode 09
+//              06-06-2021      arminth     used and changed for own LED-Strip creation
 //---------------------------------------------------------------------------
 
 #include <Arduino.h>            // Arduino Framework
-//#include <U8g2lib.h>            // For text on the little on-chip OLED
+
 #define FASTLED_INTERNAL        // Suppress build banner
 #include <FastLED.h>
 
@@ -32,7 +33,7 @@ int g_PowerLimit = 3000;         // 900mW Power Limit
 int effect = 0;
 const int effektdauer = 60000; // Dauer je Effekt in Millisekunden
 
-//#include "ledgfx.h"
+
 #include "comet.h"
 #include "marquee.h"
 #include "twinkle.h"
@@ -63,22 +64,23 @@ void loop()
   
 //ClassicFireEffect(int size, int cooling = 80, int sparking = 50, int sparks = 3, int sparkHeight = 4, bool breversed = true, bool bmirrored = true) 
   //ClassicFireEffect fire(NUM_LEDS, 30, 100, 3, 2, false, true);   // Outwards from Middle
-  //ClassicFireEffect fire(NUM_LEDS, 20, 50, 70, 4, true, true);    // Inwards toward Middle cool sparka
-  ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, true);    // Inwards toward Middle
+  //ClassicFireEffect fire(NUM_LEDS, 20, 50, 70, 4, true, true);    // Inwards toward Middle cool sparks
+  //ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, true);    // Inwards toward Middle
   //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, 4, true, false);     // Outwards from Zero
   //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, 4, false, false);     // Inwards from End
   //ClassicFireEffect fire(NUM_LEDS, 50, 300, 30, 12, true, false);     // More Intense, Extra Sparking
 
   //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, NUM_LEDS, true, false);     // Fan with correct rotation
 
+  // instantiate effect classses
+  ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, true);    // Inwards toward Middle
+  BouncingBallEffect balls(NUM_LEDS, 5, 0, true, 7.0); // bouncing Balls
 
-
-  BouncingBallEffect balls(NUM_LEDS, 5, 0, true, 7.0);
 while (true)
   {  
-EVERY_N_MILLISECONDS(effektdauer) 
+EVERY_N_MILLISECONDS(effektdauer) // Rotate to next effect and display on Serial
 {
-  //FastLED.clear(); 
+  
   effect ++;
   switch (effect) {
    case 1:
