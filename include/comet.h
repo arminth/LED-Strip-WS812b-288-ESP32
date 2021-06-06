@@ -16,11 +16,13 @@
 #define FASTLED_INTERNAL
 #include <FastLED.h>
 
+extern CRGB g_LEDs[];
+
 void DrawComet()
 {
     const byte fadeAmt = 128;
-    const int cometSize = 1;
-    const int deltaHue  = 4;
+    const int cometSize = 30;
+    const int deltaHue  = 2;
 
     static byte hue = HUE_RED;
     static int iDirection = 1;
@@ -29,16 +31,16 @@ void DrawComet()
     hue += deltaHue;
 
     iPos += iDirection;
-    if (iPos == (FastLED.count() - cometSize) || iPos == 0)
+    if (iPos == (NUM_LEDS - cometSize) || iPos == 0)
         iDirection *= -1;
     
     for (int i = 0; i < cometSize; i++)
-        FastLED.leds()[iPos + i].setHue(hue);
+        g_LEDs[iPos + i].setHue(hue);
     
     // Randomly fade the LEDs
-    for (int j = 0; j < FastLED.count(); j++)
-        if (random(10) > 5)
-            FastLED.leds()[j] = FastLED.leds()[j].fadeToBlackBy(fadeAmt);  
+    for (int j = 0; j < NUM_LEDS; j++)
+        if (random(30) > 15)
+            g_LEDs[j] = g_LEDs[j].fadeToBlackBy(fadeAmt);  
 
-    //delay(10);
+    delay(0);
 }
