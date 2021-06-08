@@ -39,6 +39,8 @@ const int effektdauer = 60000; // Dauer je Effekt in Millisekunden
 #include "twinkle.h"
 #include "fire.h"
 #include "bounce.h"
+#include "pacifica.h"
+#include "pride2015.h"
 
 void setup() 
 {
@@ -79,7 +81,7 @@ void loop()
 while (true)
   {  
 EVERY_N_MILLISECONDS(effektdauer) // Rotate to next effect and display on Serial
-{
+  {
   
   effect ++;
   switch (effect) {
@@ -101,11 +103,17 @@ EVERY_N_MILLISECONDS(effektdauer) // Rotate to next effect and display on Serial
     case 5:
     Serial.println("Effekt: Marquee mirrored");
       break;
+    case 6:
+    Serial.println("Effekt: Pacifica");
+      break;
+    case 7:
+    Serial.println("Effekt: Pride2015");
+      break;
 
     default:
     Serial.println("Effekt: Feuer"); 
+    };
   };
-};
 
 switch (effect) {
   case 0:
@@ -134,7 +142,15 @@ switch (effect) {
     DrawMarqueeMirrored();
     FastLED.show(g_Brightness);
     break;  
-    
+  case 6:  
+    EVERY_N_MILLISECONDS( 20) {
+    pacifica_loop();
+    FastLED.show(g_Brightness);}
+    break;  
+  case 7:
+    pride();
+    FastLED.show(g_Brightness);
+    break;    
   default:
     effect = 0;
 
