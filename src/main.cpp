@@ -29,7 +29,7 @@ CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
 
 int g_lineHeight = 0;
 int g_Brightness = 255;         // 0-255 LED brightness scale
-int g_PowerLimit = 3000;         // 900mW Power Limit
+int g_PowerLimit = 6000;         // 900mW Power Limit
 int effect = 0;
 const int effektdauer = 60000; // Dauer je Effekt in Millisekunden
 

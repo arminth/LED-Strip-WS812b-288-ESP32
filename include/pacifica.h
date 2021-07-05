@@ -70,7 +70,7 @@ void pacifica_one_layer( CRGBPalette16& p, uint16_t cistart, uint16_t wavescale,
     g_LEDs[i] += c;
   }
 }
-
+ 
 // Add extra 'white' to areas where the four layers of light have lined up brightly
 void pacifica_add_whitecaps()
 {
