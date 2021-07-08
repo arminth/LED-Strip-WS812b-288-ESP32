@@ -21,7 +21,7 @@
 #include <FastLED.h>
 
 
-#define NUM_LEDS    281         // 7 defekt ,FastLED definitions
+#define NUM_LEDS    22      // 7 defekt ,FastLED definitions
 #define LED_PIN     5
 
 CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
@@ -31,7 +31,7 @@ int g_lineHeight = 0;
 int g_Brightness = 255;         // 0-255 LED brightness scale
 int g_PowerLimit = 6000;         // 900mW Power Limit
 int effect = 0;
-const int effektdauer = 60000; // Dauer je Effekt in Millisekunden
+const int effektdauer = 20000; // Dauer je Effekt in Millisekunden
 
 
 #include "comet.h"
@@ -75,8 +75,8 @@ void loop()
   //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, NUM_LEDS, true, false);     // Fan with correct rotation
 
   // instantiate effect classses
-  ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, true);    // Inwards toward Middle
-  BouncingBallEffect balls(NUM_LEDS, 5, 0, true, 7.0); // bouncing Balls
+  ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, false);    // Inwards toward Middle
+  BouncingBallEffect balls(NUM_LEDS, 3, 0, false, 4.0); // bouncing Balls
 
 while (true)
   {  

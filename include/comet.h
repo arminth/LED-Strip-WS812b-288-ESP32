@@ -21,7 +21,7 @@ extern CRGB g_LEDs[];
 void DrawComet()
 {
     const byte fadeAmt = 128;
-    const int cometSize = 30;
+    const int cometSize = 5;
     const int deltaHue  = 2;
 
     static byte hue = HUE_RED;
