@@ -33,11 +33,11 @@ void DrawMarquee()
     static int scroll = 0;
     scroll++;
 
-    for (int i = scroll % 5; i < NUM_LEDS - 1; i += 5)
+    for (int i = scroll % 5; i < NUM_LEDS - 1; i += 3)
     {
         g_LEDs[i] = CRGB::Black;
     }
-    delay(50);
+    delay(70);
 }
 
 void DrawMarqueeMirrored()
@@ -60,13 +60,13 @@ void DrawMarqueeMirrored()
     static int scroll = 0;
     scroll++;
 
-    for (int i = scroll % 5; i < NUM_LEDS / 2; i += 5)
+    for (int i = scroll % 5; i < NUM_LEDS / 2; i += 3)
     {
         g_LEDs[i] = CRGB::Black;
         g_LEDs[NUM_LEDS - 1 - i] = CRGB::Black;
     }   
 
-    delay(50);
+    delay(70);
 }
 
 

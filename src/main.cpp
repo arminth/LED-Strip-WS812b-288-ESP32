@@ -16,14 +16,15 @@
 //---------------------------------------------------------------------------
 
 #include <Arduino.h>            // Arduino Framework
-
+#include <Preferences.h>
+Preferences preferences;
 #define FASTLED_INTERNAL        // Suppress build banner
 #include <FastLED.h>
 
 
-#define NUM_LEDS    22      // 7 defekt ,FastLED definitions
+#define NUM_LEDS    22      // FastLED definitions
 #define LED_PIN     5
-
+#define TOUCH_PIN    4 // Pin to attach the Touchsensor
 CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
 
 
@@ -31,7 +32,9 @@ int g_lineHeight = 0;
 int g_Brightness = 255;         // 0-255 LED brightness scale
 int g_PowerLimit = 6000;         // 900mW Power Limit
 int effect = 0;
-const int effektdauer = 20000; // Dauer je Effekt in Millisekunden
+int touch = 0;
+const int treshold = 180; // If summ of 4 touchRead() in a row is below treshold, we have a touch! 
+
 
 
 #include "comet.h"
@@ -43,20 +46,27 @@ const int effektdauer = 20000; // Dauer je Effekt in Millisekunden
 #include "pride2015.h"
 
 void setup() 
-{
+{ preferences.begin("Lampe", false);
+  effect = preferences.getInt("effect", 0);
+  preferences.end();
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(LED_PIN, OUTPUT);
+ 
 
   Serial.begin(115200);
   while (!Serial) { }
   Serial.println("ESP32 Startup");
   Serial.println("Effekt: Feuer");
   
-
+  preferences.begin("Lampe", false);
+  effect = preferences.getInt("effect", 0);
+  preferences.end();
   FastLED.addLeds<WS2812B, LED_PIN, GRB>(g_LEDs, NUM_LEDS);               // Add our LED strip to the FastLED library
+  
   FastLED.setBrightness(g_Brightness);
   set_max_power_indicator_LED(LED_BUILTIN);                               // Light the builtin LED if we power throttle
   FastLED.setMaxPowerInMilliWatts(g_PowerLimit);                          // Set the power limit, above which brightness will be throttled
+ 
 }
 
 
@@ -75,15 +85,36 @@ void loop()
   //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, NUM_LEDS, true, false);     // Fan with correct rotation
 
   // instantiate effect classses
-  ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, false);    // Inwards toward Middle
-  BouncingBallEffect balls(NUM_LEDS, 3, 0, false, 4.0); // bouncing Balls
+  //FireEffectSmooth fire(NUM_LEDS, false, false,3, 0.5,0.5,0.5);    // Inwards toward Middle
+  ClassicFireEffect fire(NUM_LEDS, 40, 80, 50, 2, true, false);    // Inwards toward Middle
+  BouncingBallEffect balls(NUM_LEDS, 5, 0, false, 4.0); // bouncing Balls
 
 while (true)
-  {  
-EVERY_N_MILLISECONDS(effektdauer) // Rotate to next effect and display on Serial
+  
   {
   
-  effect ++;
+    if (touchRead(TOUCH_PIN)+touchRead(TOUCH_PIN)+touchRead(TOUCH_PIN)+touchRead(TOUCH_PIN)<treshold)
+    {delay (200);
+      if (touchRead(TOUCH_PIN)+touchRead(TOUCH_PIN)+touchRead(TOUCH_PIN)+touchRead(TOUCH_PIN)<treshold) //safe
+      {
+    effect ++;
+    preferences.begin("Lampe", false);
+    preferences.putInt("effect", effect);
+    preferences.end();
+    Serial.println("Gespeichert. Weiter! ");
+    delay(500);
+      }
+      else { Serial.println("nix"); delay(1000);}
+        
+    };
+     
+    
+ 
+  
+  
+
+  
+
   switch (effect) {
    case 1:
      Serial.println("Effekt: Bälle"); 
@@ -109,18 +140,34 @@ EVERY_N_MILLISECONDS(effektdauer) // Rotate to next effect and display on Serial
     case 7:
     Serial.println("Effekt: Pride2015");
       break;
+    case 11:
+    Serial.println("Effekt: Leselampe 25%");
+      break;  
+    case 10:
+    Serial.println("Effekt: Leselampe 50%");
+      break;  
+    case 9:
+    Serial.println("Effekt: Leselampe 75%");
+      break;  
+     case 8:
+    Serial.println("Effekt: Leselampe 100%");
+      break;  
+    case 12:
+    Serial.println("Effekt: Lampe aus");
+      break;  
+
 
     default:
     Serial.println("Effekt: Feuer"); 
-    };
-  };
+    }; 
+  
 
 switch (effect) {
   case 0:
     FastLED.clear();
     fire.DrawFire();
     FastLED.show(g_Brightness); 
-    delay(33);
+    delay(30);
     break;
   case 1:
    balls.Draw();
@@ -150,6 +197,27 @@ switch (effect) {
   case 7:
     pride();
     FastLED.show(g_Brightness);
+    break;  
+    case 8:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(g_Brightness);
+    break;
+    
+    case 9:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(196);
+    break;
+    case 10:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(128);
+    break;
+    case 11:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(64);
+    break;
+    case 12:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::Black);
+    FastLED.show();
     break;    
   default:
     effect = 0;

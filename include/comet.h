@@ -20,8 +20,8 @@ extern CRGB g_LEDs[];
 
 void DrawComet()
 {
-    const byte fadeAmt = 128;
-    const int cometSize = 5;
+    const byte fadeAmt = 188;
+    const int cometSize = 2;
     const int deltaHue  = 2;
 
     static byte hue = HUE_RED;
@@ -42,5 +42,5 @@ void DrawComet()
         if (random(30) > 15)
             g_LEDs[j] = g_LEDs[j].fadeToBlackBy(fadeAmt);  
 
-    delay(0);
+    delay(40);
 }
