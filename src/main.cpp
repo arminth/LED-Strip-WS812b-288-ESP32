@@ -46,7 +46,9 @@ const int treshold = 180; // If summ of 4 touchRead() in a row is below treshold
 #include "pride2015.h"
 
 void setup() 
-{ preferences.begin("Lampe", false);
+
+{ delay(1000);
+  preferences.begin("Lampe", false);
   effect = preferences.getInt("effect", 0);
   preferences.end();
   pinMode(LED_BUILTIN, OUTPUT);
