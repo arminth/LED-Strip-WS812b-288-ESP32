@@ -47,7 +47,7 @@ const int treshold = 180; // If summ of 4 touchRead() in a row is below treshold
 
 void setup() 
 
-{ delay(1000);
+{ 
   preferences.begin("Lampe", false);
   effect = preferences.getInt("effect", 0);
   preferences.end();
