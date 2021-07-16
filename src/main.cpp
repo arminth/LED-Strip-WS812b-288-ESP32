@@ -22,7 +22,7 @@ Preferences preferences;
 #include <FastLED.h>
 
 
-#define NUM_LEDS    22      // FastLED definitions
+#define NUM_LEDS    52      // FastLED definitions
 #define LED_PIN     5
 #define TOUCH_PIN    4 // Pin to attach the Touchsensor
 CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
@@ -88,7 +88,7 @@ void loop()
 
   // instantiate effect classses
   //FireEffectSmooth fire(NUM_LEDS, false, false,3, 0.5,0.5,0.5);    // Inwards toward Middle
-  ClassicFireEffect fire(NUM_LEDS, 40, 80, 50, 2, true, false);    // Inwards toward Middle
+  ClassicFireEffect fire(NUM_LEDS, 40, 100, 50, 10, true, false);    // Inwards toward Middle
   BouncingBallEffect balls(NUM_LEDS, 5, 0, false, 4.0); // bouncing Balls
 
 while (true)
