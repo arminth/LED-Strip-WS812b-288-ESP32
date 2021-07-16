@@ -26,7 +26,7 @@
 //
 //---------------------------------------------------------------------------
 
-#include <sys/time.h>                               // For time-of-day
+#include <time.h>                               // For time-of-day
 
 #include <Arduino.h>
 #define FASTLED_INTERNAL
