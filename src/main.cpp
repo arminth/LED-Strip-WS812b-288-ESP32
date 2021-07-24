@@ -64,7 +64,74 @@ boolean modi = false; //configuration modified?
 #include "bounce.h"
 #include "pacifica.h"
 #include "pride2015.h"
+ClassicFireEffect fire(NUM_LEDS, 40, 80, 50, 4, true, false); 
+BouncingBallEffect balls(NUM_LEDS, 5, 0, false, 4.0); // bouncing Balls
 
+void effect_on()
+ {
+   switch (effect) { //enable actual effect
+ 
+  case 0:
+    FastLED.clear();
+    fire.DrawFire();
+    FastLED.show(g_Brightness); 
+    delay(30);
+    break;
+  case 1:
+   balls.Draw();
+   FastLED.show(g_Brightness);
+    break;
+  case 2:
+    DrawComet();
+    FastLED.show(g_Brightness);
+    break;  
+  case 3:
+    DrawTwinkle();
+    FastLED.show(g_Brightness);
+    break;  
+  case 4:
+    DrawMarquee();
+    FastLED.show(g_Brightness);
+    break;  
+  case 5:  
+    DrawMarqueeMirrored();
+    FastLED.show(g_Brightness);
+    break;  
+  case 6:  
+    EVERY_N_MILLISECONDS( 20) {
+    pacifica_loop();
+    FastLED.show(g_Brightness);}
+    break;  
+  case 7:
+    pride();
+    FastLED.show(g_Brightness);
+    break;  
+    case 8:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(g_Brightness);
+    break;
+    
+    case 9:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(int(g_Brightness*0.75));
+    break;
+    case 10:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(int(g_Brightness*0.5));
+    break;
+    case 11:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
+    FastLED.show(int(g_Brightness*0.25));
+    break;
+    case 12:
+    fill_solid(g_LEDs,NUM_LEDS, CRGB::Black);
+    FastLED.show();
+    break;    
+  default:
+    effect = 0;
+
+  } // of switch
+ };
 void setup() 
 
 { pinMode(LED_BUILTIN, OUTPUT);
@@ -77,7 +144,8 @@ void setup()
   FastLED.setBrightness(g_Brightness);
   set_max_power_indicator_LED(LED_BUILTIN);                               // Light the builtin LED if we power throttle
   FastLED.setMaxPowerInMilliWatts(g_PowerLimit);                          // Set the power limit, above which brightness will be throttled
- 
+  
+
   Serial.begin(115200);
   while (!Serial) { }
   Serial.println("ESP32 Startup");
@@ -195,89 +263,16 @@ for (int i=0; i<5; i++){
 void loop() 
 {
   
-//ClassicFireEffect(int size, int cooling = 80, int sparking = 50, int sparks = 3, int sparkHeight = 4, bool breversed = true, bool bmirrored = true) 
-  //ClassicFireEffect fire(NUM_LEDS, 30, 100, 3, 2, false, true);   // Outwards from Middle
-  //ClassicFireEffect fire(NUM_LEDS, 20, 50, 70, 4, true, true);    // Inwards toward Middle cool sparks
-  //ClassicFireEffect fire(NUM_LEDS, 20, 1000, 10, 4, true, true);    // Inwards toward Middle
-  //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, 4, true, false);     // Outwards from Zero
-  //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, 4, false, false);     // Inwards from End
-  //ClassicFireEffect fire(NUM_LEDS, 50, 300, 30, 12, true, false);     // More Intense, Extra Sparking
 
-  //ClassicFireEffect fire(NUM_LEDS, 20, 100, 3, NUM_LEDS, true, false);     // Fan with correct rotation
-
-  // instantiate effect classses
-  //FireEffectSmooth fire(NUM_LEDS, false, false,3, 0.5,0.5,0.5);    // Inwards toward Middle
-  ClassicFireEffect fire(NUM_LEDS, 40, 80, 50, 4, true, false); 
-  BouncingBallEffect balls(NUM_LEDS, 5, 0, false, 4.0); // bouncing Balls
 
 
 while (true)
   
-  {  
-    switch (effect) { //enable actual effect
- 
-  case 0:
-    FastLED.clear();
-    fire.DrawFire();
-    FastLED.show(g_Brightness); 
-    delay(30);
-    break;
-  case 1:
-   balls.Draw();
-   FastLED.show(g_Brightness);
-    break;
-  case 2:
-    DrawComet();
-    FastLED.show(g_Brightness);
-    break;  
-  case 3:
-    DrawTwinkle();
-    FastLED.show(g_Brightness);
-    break;  
-  case 4:
-    DrawMarquee();
-    FastLED.show(g_Brightness);
-    break;  
-  case 5:  
-    DrawMarqueeMirrored();
-    FastLED.show(g_Brightness);
-    break;  
-  case 6:  
-    EVERY_N_MILLISECONDS( 20) {
-    pacifica_loop();
-    FastLED.show(g_Brightness);}
-    break;  
-  case 7:
-    pride();
-    FastLED.show(g_Brightness);
-    break;  
-    case 8:
-    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-    FastLED.show(g_Brightness);
-    break;
+  { 
+  effect_on(); 
     
-    case 9:
-    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-    FastLED.show(int(g_Brightness*0.75));
-    break;
-    case 10:
-    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-    FastLED.show(int(g_Brightness*0.5));
-    break;
-    case 11:
-    fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-    FastLED.show(int(g_Brightness*0.25));
-    break;
-    case 12:
-    fill_solid(g_LEDs,NUM_LEDS, CRGB::Black);
-    FastLED.show();
-    break;    
-  default:
-    effect = 0;
 
-  } // of switch
-
-      WiFiClient client = server.available();   // Listen for incoming clients
+  WiFiClient client = server.available();   // Listen for incoming clients
   if (client) { 
     
     
@@ -410,69 +405,8 @@ while (true)
         }
       }
       if (!client.available()) // if the client keeps the connection open as Chrome does, we need to update the effects within the while loop.
-      {switch (effect) { //enable actual effect
- 
-          case 0:
-            FastLED.clear();
-            fire.DrawFire();
-            FastLED.show(g_Brightness); 
-            delay(30);
-            break;
-          case 1:
-          balls.Draw();
-          FastLED.show(g_Brightness);
-            break;
-          case 2:
-            DrawComet();
-            FastLED.show(g_Brightness);
-            break;  
-          case 3:
-            DrawTwinkle();
-            FastLED.show(g_Brightness);
-            break;  
-          case 4:
-            DrawMarquee();
-            FastLED.show(g_Brightness);
-            break;  
-          case 5:  
-            DrawMarqueeMirrored();
-            FastLED.show(g_Brightness);
-            break;  
-          case 6:  
-            EVERY_N_MILLISECONDS( 20) {
-            pacifica_loop();
-            FastLED.show(g_Brightness);}
-            break;  
-          case 7:
-            pride();
-            FastLED.show(g_Brightness);
-            break;  
-            case 8:
-            fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-            FastLED.show(g_Brightness);
-            break;
-            
-            case 9:
-            fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-            FastLED.show(int(g_Brightness*0.75));
-            break;
-            case 10:
-            fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-            FastLED.show(int(g_Brightness*0.5));
-            break;
-            case 11:
-            fill_solid(g_LEDs,NUM_LEDS, CRGB::White);
-            FastLED.show(int(g_Brightness*0.25));
-            break;
-            case 12:
-            fill_solid(g_LEDs,NUM_LEDS, CRGB::Black);
-            FastLED.show();
-            break;    
-          default:
-            effect = 0;
-
-      } //of switch  
-    } //of if
+      { effect_on();
+      } //of if
     } //of while connected
 
     // Clear the header variable
@@ -554,9 +488,11 @@ while (true)
 
 
 
-    }
-    
-        
+ };
+
+ 
+
+ 
     
      
     
