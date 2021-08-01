@@ -21,7 +21,7 @@
 #include <FastLED.h>
 
 
-#define NUM_LEDS    281         // 7 defekt ,FastLED definitions
+#define NUM_LEDS    42         // 7 defekt ,FastLED definitions
 #define LED_PIN     5
 
 CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
