@@ -1,5 +1,6 @@
 $fn=60;
-
+module upper_stand()
+{
 union()
 {
 difference()
@@ -19,4 +20,14 @@ translate ([-40,0,1] )cube([10,15,1],center=true);
 translate ([-80,0,1] )cube([10,15,1],center=true);
 translate ([80,0,1] )cube([10,15,1],center=true);
 };
+};
 
+module lid()
+{minkowski () {cube([190,40,1],center=true);cylinder(d=6, h=0.000001);}
+translate([0,0,1.25]) cube([189.6,39.6,2],center=true);
+};
+
+
+
+lid();
+translate([0,0,21]) upper_stand();

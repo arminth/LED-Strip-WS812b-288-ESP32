@@ -38,7 +38,7 @@ CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
 
 
 int g_lineHeight = 0;
-int g_Brightness = 100 ;        // 0-255 LED brightness scale
+int g_Brightness = 180 ;        // 0-255 LED brightness scale
 int g_PowerLimit = 4500;         // 4500mW Power Limit
 int effect = 0;   // effect number
 int versuche = 0; // number of trys to connenct to WiFi
@@ -46,7 +46,7 @@ int versuche = 0; // number of trys to connenct to WiFi
 
 const char* softap_ssid     = "Firelamp";
 const char* softap_password = "12345678";
-String modes[25] = {"Fire","Balls","Comet","Twinkle","Marquee","Marquee Mirrored","Pacifica","Pride 2015", "Lamp full","Lamp less bright","Lamp medium","Lamp dimm","Red full", "Red less bright", "Red medium", "Red dim", "Green full", "Green less bright", "Green medium", "Green dim", "Blue full", "Blue less bright", "Blue medium", "Blue dim" "Lamp OFF"};
+String modes[29] = {"Fire","Balls","Comet","Twinkle","Marquee","Marquee Mirrored","Pacifica","Pride 2015", "Lamp full","Lamp less bright","Lamp medium","Lamp dimm","Red full", "Red less bright", "Red medium", "Red dim", "Green full", "Green less bright", "Green medium", "Green dim", "Blue full", "Blue less bright", "Blue medium", "Blue dim","Warm White full", "Warm White less bright", "Warm White medium", "Warm White dim", "Lamp OFF"};
 String ssid_connected = softap_ssid; //which SSID are we connected
 
 
@@ -175,6 +175,22 @@ void effect_on()  // update enabled selected effect
     FastLED.show(int(g_Brightness*0.1));
     break;
     case 24:
+    fill_solid(g_LEDs,NUM_LEDS, Candle);
+    FastLED.show(g_Brightness);
+    break; 
+    case 25:
+    fill_solid(g_LEDs,NUM_LEDS, Candle);
+    FastLED.show(int(g_Brightness*0.4));
+    break;
+    case 26:
+    fill_solid(g_LEDs,NUM_LEDS, Candle);
+    FastLED.show(int(g_Brightness*0.25));
+    break;
+    case 27:
+    fill_solid(g_LEDs,NUM_LEDS, Candle);
+    FastLED.show(int(g_Brightness*0.1));
+    break;
+    case 28:
     fill_solid(g_LEDs,NUM_LEDS, CRGB::Black);
     FastLED.show();
     break;    
@@ -358,10 +374,22 @@ while (true)
             }else if (header.indexOf("GET /lamp25b/on") >= 0) {
               effect = 23;
               modi = true;
+              }else if (header.indexOf("GET /lamp100ww/on") >= 0) {
+              effect = 24;
+              modi = true;
+            }else if (header.indexOf("GET /lamp75ww/on") >= 0) {
+              effect = 25;
+              modi = true;
+            }else if (header.indexOf("GET /lamp50ww/on") >= 0) {
+              effect = 26;
+              modi = true;
+            }else if (header.indexOf("GET /lamp25ww/on") >= 0) {
+              effect = 27;
+              modi = true;
 
 
             }else if (header.indexOf("GET /off/on") >= 0) {
-              effect = 24;
+              effect = 28;
               modi = true;
             }else if (header.indexOf("GET /resetwifi/on") >= 0) {
               wm.resetSettings();  
@@ -396,10 +424,14 @@ while (true)
             client.println("<a href=\"/marquee_m/on\"><button class=\"button\">Marquee mirrored</button></a></p>");
             client.println("<p><a href=\"/pacifica/on\"><button class=\"button\">Pacifica</button></a>");
             client.println("<a href=\"/pride2015/on\"><button class=\"button\">Pride</button></a></p>");
-            client.println("<p><a href=\"/lamp100/on\"><button class=\"button\">Lamp Full</button></a>");
-            client.println("<a href=\"/lamp75/on\"><button class=\"button\">Lamp less bright</button></a></p>");
-            client.println("<p><a href=\"/lamp50/on\"><button class=\"button\">Lamp  medium</button></a>");
-            client.println("<a href=\"/lamp25/on\"><button class=\"button\">Lamp  dimm</button></a></p><br>");
+            client.println("<p><a href=\"/lamp100/on\"><button class=\"button\">Lamp Full white</button></a>");
+            client.println("<a href=\"/lamp75/on\"><button class=\"button\">Lamp less bright white</button></a></p>");
+            client.println("<p><a href=\"/lamp50/on\"><button class=\"button\">Lamp  medium white </button></a>");
+            client.println("<a href=\"/lamp25/on\"><button class=\"button\">Lamp  dimm white</button></a></p><br>");
+            client.println("<p><a href=\"/lamp100ww/on\"><button class=\"button\">Lamp Full warm white</button></a>");
+            client.println("<a href=\"/lamp75ww/on\"><button class=\"button\">Lamp less bright warm white</button></a></p>");
+            client.println("<p><a href=\"/lamp50ww/on\"><button class=\"button\">Lamp  medium warm white </button></a>");
+            client.println("<a href=\"/lamp25ww/on\"><button class=\"button\">Lamp  dimm warm white</button></a></p><br>");
             client.println("<p><a href=\"/lamp100r/on\"><button class=\"button\">Lamp Full red</button></a>");
             client.println("<a href=\"/lamp75r/on\"><button class=\"button\">Lamp less bright red</button></a></p>");
             client.println("<p><a href=\"/lamp50r/on\"><button class=\"button\">Lamp  medium red</button></a>");
