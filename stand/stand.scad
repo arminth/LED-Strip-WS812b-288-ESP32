@@ -1,6 +1,10 @@
 $length_of_glass = 180;
 $thickness_of_glas=1.35; //max 6-7mm
 $play=0.4;
+$top=true;
+$lid=true;
+
+
 
 $fn=60;
 module upper_stand()
@@ -34,5 +38,5 @@ translate([0,0,1.25]) cube([$length_of_glass+9.6,39.6,2],center=true);
 
 
 
-lid();
-translate([0,0,21]) upper_stand();
+if ($lid==true) lid();
+if ($top==true) {translate([0,0,21]) upper_stand();};
