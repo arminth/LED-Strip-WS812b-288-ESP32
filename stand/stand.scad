@@ -39,4 +39,4 @@ translate([0,0,1.25]) cube([$length_of_glass+9.6,39.6,2],center=true);
 
 
 if ($lid==true) lid();
-if ($top==true) {translate([0,0,21]) upper_stand();};
+if ($top==true) {translate([0,60,20]) upper_stand();};
