@@ -44,7 +44,7 @@ int effect = 0;   // effect number
 int versuche = 0; // number of trys to connenct to WiFi
 
 
-const char* softap_ssid     = "Firelamp";
+const char* softap_ssid     = "LEDstand";
 const char* softap_password = "12345678";
 String modes[29] = {"Fire","Balls","Comet","Twinkle","Marquee","Marquee Mirrored","Pacifica","Pride 2015", "Lamp full","Lamp less bright","Lamp medium","Lamp dimm","Red full", "Red less bright", "Red medium", "Red dim", "Green full", "Green less bright", "Green medium", "Green dim", "Blue full", "Blue less bright", "Blue medium", "Blue dim","Warm White full", "Warm White less bright", "Warm White medium", "Warm White dim", "Lamp OFF"};
 String ssid_connected = softap_ssid; //which SSID are we connected
@@ -218,7 +218,7 @@ void setup()
   while (!Serial) { }
   Serial.println("ESP32 Startup");
  
-fill_solid(g_LEDs,NUM_LEDS, CRGB::Blue); // indicate lamp start in green
+fill_solid(g_LEDs,NUM_LEDS, CRGB::Blue); // indicate lamp start in blue
     FastLED.show(int(g_Brightness*0.75));
 
 
@@ -409,7 +409,7 @@ while (true)
             client.println(".button2 {background-color: #770000; border: none; color: black; padding: 16px 40px; text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}</style></head>");
             
             // Web Page Heading
-            client.println("<body><h1>ESP32 LED-lamp Web Server</h1><br>");
+            client.println("<body><h1>ESP32 LED-stand Web Server</h1><br>");
             client.println("<h2>Connected to: <br>");
             client.print(ssid_connected);
             client.println("</h2>");
