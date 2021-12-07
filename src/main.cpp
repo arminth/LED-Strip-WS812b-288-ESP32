@@ -1,5 +1,5 @@
 //+--------------------------------------------------------------------------
-//
+//This software uses code from Dave Plummer and Mark Kriegsman
 // NightDriver - (c) 2018 Dave Plummer.  All Rights Reserved.
 //
 // Original File:        LED Episode 08
@@ -18,6 +18,7 @@
 //                                          added effects pacifica and pride2015 from Mark Kriegsman                
 //              06-22-2021      arminth     added WiFi
 //              06-24-2021      arminth     included WiFiManager
+//              12-07-2021      arminth     adapted for LED stand
 //---------------------------------------------------------------------------
 
 #include <Arduino.h>            // Arduino Framework
