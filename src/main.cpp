@@ -30,7 +30,7 @@ Preferences preferences;
 #include <WiFi.h>
 #include <WiFiManager.h> 
 WiFiManager wm;
-#define NUM_LEDS    27      // FastLED definitions, 52 LED's per arm
+#define NUM_LEDS    27      // FastLED definitions, 27 LED's in stand
 #define LED_PIN     5
 
 CRGB g_LEDs[NUM_LEDS] = {0};    // Frame buffer for FastLED
@@ -412,7 +412,7 @@ while (true)
             
             // Web Page Heading
             client.println("<body><h1>Tamara's VW Golf IV LED-stand Web Server</h1><br>");
-            client.println("<h2>Isabel und Timo 2023<br>");
+            client.println("<h2>von Isabel und Timo 2023<br>");
             client.println("<h2>Connected to: <br>");
             client.print(ssid_connected);
             client.println("</h2>");
