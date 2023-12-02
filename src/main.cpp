@@ -19,6 +19,7 @@
 //              06-22-2021      arminth     added WiFi
 //              06-24-2021      arminth     included WiFiManager
 //              12-07-2021      arminth     adapted for LED stand
+//              12-02-2023      arminth     Tuned for Tamara
 //---------------------------------------------------------------------------
 
 #include <Arduino.h>            // Arduino Framework
@@ -410,7 +411,8 @@ while (true)
             client.println(".button2 {background-color: #770000; border: none; color: black; padding: 16px 40px; text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}</style></head>");
             
             // Web Page Heading
-            client.println("<body><h1>ESP32 LED-stand Web Server</h1><br>");
+            client.println("<body><h1>Tamara's VW Golf IV LED-stand Web Server</h1><br>");
+            client.println("<h2>Isabel und Timo 2023<br>");
             client.println("<h2>Connected to: <br>");
             client.print(ssid_connected);
             client.println("</h2>");
